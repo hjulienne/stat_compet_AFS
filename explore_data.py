@@ -14,7 +14,7 @@ from sklearn.preprocessing import normalize
 fi = "./data/training_other.csv"
 data_soil = pd.read_csv(fi, sep= '\t')
 
-fi_spec = "./data/training_spectra.csv"
+fi_spec = "./data/sorted_test_spectra.csv"
 spec = pd.read_csv(fi_spec, sep='\t')
 ids_feat = range(1,16) + [22] 
 ids_targ = range(17,22)
@@ -83,9 +83,9 @@ pca_plots.close()
 
 ##############Apply PCA on spectra######
 #### We apply PCA on sample and not on features (meaning we search the representative spectrum)
+
 pcaS_plt = PdfPages("./plots/PCA_Spec.pdf")
 PCA_spec  = PCA(copy=True)
-
 
 PCA_spec.fit(spec.transpose().values[1:,:])
 n_comp = 5
@@ -113,4 +113,4 @@ pcaS_plt.close()
 spec_comp = spec.iloc[:,1:].values.dot(spec_t[:,:6])
 spec_comp = normalize(spec_comp, axis=1)
 spec_comp = pd.DataFrame(spec_comp)
-spec_comp.to_csv("./data/spec_component.csv",sep="\t", index=False)
+spec_comp.to_csv("./data/spec_component_test.csv",sep="\t", index=False)
